@@ -128,9 +128,96 @@ body{
 {test: /\.scss$/i, use:['style-loader', 'css-loader', 'sass-loader']}
 ```
 
+## [0.5] - 2021-01-17
+
+> Integrating `postcss-loader`
+
+### Added
+
+- 1. `npm install --save-dev postcss-loader`
+- 2. `npm install --save-dev cssnano autoprefixer rucksack-css`
+- 3. `npm install --save-dev mini-css-extract-plugin`
+- 4. `touch postcss.config.css`
+
+```javascript
+module.exports = {
+  plugins: {
+    autoprefixer: {},
+    cssnano: {},
+    'rucksack-css': {},
+  },
+};
+```
+
+- 6. create `.browserslistrc`
+
+```
+last 2 years
+> 1%
+not dead
+```
+
+### Changed
+
+- 5. `webpack.config.js`
+
+```javascript
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+{
+  test: /\.scss$/i,
+  use: [
+    {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        hmr: process.env.NODE_ENV === 'development',
+      },
+    },
+    ***~~'style-loader',~~
+    'css-loader',
+    'postcss-loader',
+    'sass-loader',***
+  ]
+}
+
+plugins: [
+  // This plugin extracts css file from js files and put them in the appropriate named files.
+  new MiniCssExtractPlugin({
+    filename: '[name].css'
+  })
+],
+```
+
+**_~~'style-loader'~~,'css-loader','postcss-loader','sass-loader',_**
+
+- 7. `src/main.scss`
+
+```
+body {
+  display: grid;
+  transition: all .5s;
+  user-select: none;
+  background: linear-gradient(to bottom, white, orange);
+  font-size: responsive;
+}
+```
+
 ### Errors
 
 - Error: Cannot find module 'webpack-cli/bin/config-yargs'
-  ![](./assets/img/err_1png)
+  ![](./assets/img/err_1.png)
 
   -> webpack-cli v4 doesn't work with webpack-dev-server v3. CHeck your `package.json` file
+
+- No 'hmr' option ![](./assets/img/err_2.png)
+
+-> Note: HMR is automatically supported in webpack 5. No need to configure it.
+
+- No template for dependency: CssDependency ![](./assets/img/err_3.png)
+
+-> You forgot to load `MiniCssExtractPlugin` into your `webpack.config.js` file.
+
+### Indexes
+
+1. `cssnano`: minimises the css file
+2. `.browserslistrc`: specifies supported browsers

@@ -8,7 +8,10 @@ module.exports = {
     contentBase: './dist',
   },
   module: {
-    rules: [{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }],
+    rules: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+      { test: /\.scss$/i, use: ['style-loader', 'css-loader', 'sass-loader'] },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({

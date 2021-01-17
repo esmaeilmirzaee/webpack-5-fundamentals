@@ -100,6 +100,32 @@ const foo = (name) => {
 foo('Robert');
 ```
 
+## [0.4] - 2021-01-17
+
+> Handle css files []()
+
+### Added
+
+1. `npm install --save-dev style-loader css-loader`
+2. `npm install --save-dev sass sass-loader`
+   four. `src.main.scss`
+
+```sass
+$bodyColour: red;
+
+body{
+  background-color: $bodyColour;
+}
+```
+
+### Changed
+
+3. `webpack.config.js`
+
+```javascript
+{test: /\.scss$/i, use:['style-loader', 'css-loader', 'sass-loader']}
+```
+
 ### Errors
 
 - Error: Cannot find module 'webpack-cli/bin/config-yargs'

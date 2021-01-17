@@ -106,9 +106,9 @@ foo('Robert');
 
 ### Added
 
-1. `npm install --save-dev style-loader css-loader`
-2. `npm install --save-dev sass sass-loader`
-   four. `src.main.scss`
+- 1 `npm install --save-dev style-loader css-loader`
+- 2. `npm install --save-dev sass sass-loader`
+- 4. `src.main.scss`
 
 ```sass
 $bodyColour: red;
@@ -117,6 +117,8 @@ body{
   background-color: $bodyColour;
 }
 ```
+
+- 5. DO not forget to import it into your `index.js`.
 
 ### Changed
 

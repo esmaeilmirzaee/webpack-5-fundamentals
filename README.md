@@ -2,11 +2,11 @@
 
 # Changelog
 
-## [0.1] - 2021-01-17
+### [0.1] - 2021-01-17
 
 > Initialisation of webpack [documentation webpack init](https://webpack.js.org/guides/development/#using-webpack-dev-server)
 
-### Added
+##### Added
 
 - npm init -y
 - npm install webpack webpack-cli --save-dev
@@ -29,7 +29,7 @@ module.exports = {
 }
 ```
 
-### Changed
+##### Changed
 
 - modify `package.json`
 
@@ -37,18 +37,18 @@ module.exports = {
     "build": "webpack"
 ```
 
-## [0.2] - 2021-01-17
+### [0.2] - 2021-01-17
 
 > Add webpack-dev-server and html-webpack-plugin
 
-### Added
+##### Added
 
 > [documentation webpack dev server](https://webpack.js.org/guides/development/#using-webpack-dev-server)
 
 - `npm install --save-dev webpack-dev-server`
 - `npm install --save-dev html-webpack-plugin`
 
-### Changed
+##### Changed
 
 - `webpack.config.js`
 
@@ -62,13 +62,13 @@ module.exports = {
   "dev":"webpack-dev-server --open",
 ```
 
-# Changelog
+##### Changelog
 
-## [0.3] - 2021-01-17
+### [0.3] - 2021-01-17
 
 > Integrating with babel. [babel documents](https://babeljs.io/setup#installation)
 
-### Added
+##### Added
 
 - `npm install --save-dev babel-loader @babel/core`
 - `npm install --save-dev @babel/preset-env`
@@ -80,7 +80,7 @@ module.exports = {
 }
 ```
 
-### Changed
+##### Changed
 
 - `webpack.config.js`
 
@@ -100,15 +100,15 @@ const foo = (name) => {
 foo('Robert');
 ```
 
-## [0.4] - 2021-01-17
+### [0.4] - 2021-01-17
 
 > Handle css files []()
 
-### Added
+##### Added
 
 - 1 `npm install --save-dev style-loader css-loader`
-- 2. `npm install --save-dev sass sass-loader`
-- 4. `src.main.scss`
+- 2 `npm install --save-dev sass sass-loader`
+- 4 `src.main.scss`
 
 ```sass
 $bodyColour: red;
@@ -118,26 +118,26 @@ body{
 }
 ```
 
-- 5. DO not forget to import it into your `index.js`.
+- 5 DO not forget to import it into your `index.js`.
 
-### Changed
+##### Changed
 
-3. `webpack.config.js`
+- 3 `webpack.config.js`
 
 ```javascript
 {test: /\.scss$/i, use:['style-loader', 'css-loader', 'sass-loader']}
 ```
 
-## [0.5] - 2021-01-17
+### [0.5] - 2021-01-17
 
 > Integrating `postcss-loader`
 
-### Added
+##### Added
 
-- 1. `npm install --save-dev postcss-loader`
-- 2. `npm install --save-dev cssnano autoprefixer rucksack-css`
-- 3. `npm install --save-dev mini-css-extract-plugin`
-- 4. `touch postcss.config.css`
+- 1 `npm install --save-dev postcss-loader`
+- 2 `npm install --save-dev cssnano autoprefixer rucksack-css`
+- 3 `npm install --save-dev mini-css-extract-plugin`
+- 4 `touch postcss.config.css`
 
 ```javascript
 module.exports = {
@@ -149,7 +149,7 @@ module.exports = {
 };
 ```
 
-- 6. create `.browserslistrc`
+- 6 create `.browserslistrc`
 
 ```
 last 2 years
@@ -157,9 +157,9 @@ last 2 years
 not dead
 ```
 
-### Changed
+##### Changed
 
-- 5. `webpack.config.js`
+- 5 `webpack.config.js`
 
 ```javascript
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -190,7 +190,7 @@ plugins: [
 
 **_~~'style-loader'~~,'css-loader','postcss-loader','sass-loader',_**
 
-- 7. `src/main.scss`
+- 7 `src/main.scss`
 
 ```
 body {
@@ -202,7 +202,7 @@ body {
 }
 ```
 
-### Errors
+## Errors
 
 - Error: Cannot find module 'webpack-cli/bin/config-yargs'
   ![](./assets/img/err_1.png)
@@ -217,7 +217,7 @@ body {
 
 -> You forgot to load `MiniCssExtractPlugin` into your `webpack.config.js` file.
 
-### Indexes
+## Indexes
 
 1. `cssnano`: minimises the css file
 2. `.browserslistrc`: specifies supported browsers

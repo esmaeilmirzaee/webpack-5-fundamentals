@@ -370,6 +370,10 @@ module.exports = merge(common, {
 });
 ```
 
+## [0.8] - 2021-01-17
+
+> Refer to documentation to understand how to use _prevent duplication_ or _code spliting_.
+
 ## Errors
 
 - Error: Cannot find module 'webpack-cli/bin/config-yargs'
@@ -394,9 +398,14 @@ module.exports = merge(common, {
 
 :: Naming error -- Check the imported file name
 
+- Error: Conflict: Multiple chucks emit assets to the same filename bundle.js
+
+:: In your `webpack.common.js`, alter `output: {filename:'bundle.js',}` to `output: {filename:'[name].bundle.js',}`.
+
 ## Indexes
 
 1. `cssnano`: minimises the css file
 2. `.browserslistrc`: specifies supported browsers
 3. source maps will allow you to debug code easily during development---it's available for both `js` and `css`.
 4. common config is the shared config which the both `dev` and `prod` have in common.
+5. _Prevent Duplication_ helps when two `js` files uses a shared (piece, file or library) to optimise the `bundle` file.

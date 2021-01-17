@@ -207,15 +207,15 @@ body {
 - Error: Cannot find module 'webpack-cli/bin/config-yargs'
   ![](./assets/img/err_1.png)
 
-  -> webpack-cli v4 doesn't work with webpack-dev-server v3. CHeck your `package.json` file
+:: webpack-cli v4 doesn't work with webpack-dev-server v3. CHeck your `package.json` file
 
 - No 'hmr' option ![](./assets/img/err_2.png)
 
--> Note: HMR is automatically supported in webpack 5. No need to configure it.
+:: Note: HMR is automatically supported in webpack 5. No need to configure it.
 
 - No template for dependency: CssDependency ![](./assets/img/err_3.png)
 
--> You forgot to load `MiniCssExtractPlugin` into your `webpack.config.js` file.
+:: You forgot to load `MiniCssExtractPlugin` into your `webpack.config.js` file.
 
 ## Indexes
 

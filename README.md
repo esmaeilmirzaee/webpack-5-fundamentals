@@ -202,6 +202,85 @@ body {
 }
 ```
 
+### [0.6] - 2021-01-17
+
+##### Added
+
+- Add item
+
+##### Changed
+
+- 1 Duplicate `webpack.config.js` and create two separate files named `webpack.dev.js` and `webpack.prod.js`.
+- 2 `package.json`
+
+```javascript
+"scripts": {
+  "dev": "webpack-dev-server --open --config webpack.dev.js", "build":"NODE_ENV=production webpack --config webpack.prod.js"
+}
+```
+
+- 3 `webpack.dev.js`
+
+```javascript
+module.exports = {
+  mode: 'development',
+  entry: './src/index.js',
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './dist',
+  },
+  module: {
+    rules: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+      {
+        test: /\.scss$/i,
+        use: [
+          { loader: 'css-loader', options: { sourceMap: true } },
+          { loader: 'postcss-loader', options: { sourceMap: true } },
+          { loader: 'sass-loader', options: { sourceMap: true } },
+        ],
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Development',
+    }),
+  ],
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+};
+```
+
+- 4 `webpack.prod.js`
+
+```javascript
+mode: 'production',
+```
+
+- 5 `postcss.config.js`
+
+```javascript
+if (process.env.NODE_ENV === 'production') {
+  module.exports = {
+    plugins: {
+      autoprefixer: {},
+      cssnano: {},
+      'rucksack-css': {},
+    },
+  };
+} else {
+  module.exports = {
+    plugins: {
+      autoprefixer: {},
+      'rucksack-css': {},
+    },
+  };
+}
+```
+
 ## Errors
 
 - Error: Cannot find module 'webpack-cli/bin/config-yargs'
@@ -217,7 +296,13 @@ body {
 
 :: You forgot to load `MiniCssExtractPlugin` into your `webpack.config.js` file.
 
+- You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. ![](./asssets/img/err_4.png)
+
+:: Have you provided the appropriate loader.
+:: Check configuration of `package.json` to check that the correct `webpack` config is provided.
+
 ## Indexes
 
 1. `cssnano`: minimises the css file
 2. `.browserslistrc`: specifies supported browsers
+3. source maps will allow you to debug code easily during development---it's available for both `js` and `css`.

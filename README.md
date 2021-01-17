@@ -204,6 +204,8 @@ body {
 
 ### [0.6] - 2021-01-17
 
+> Split `webpack` config into two different files, `dev` and `prod`.
+
 ##### Added
 
 - Add item
@@ -281,6 +283,93 @@ if (process.env.NODE_ENV === 'production') {
 }
 ```
 
+### [0.7] - 2021-01-17
+
+> DRY
+
+##### Added
+
+- 1 `npm install --save-dev webpack-merge`
+- 2 create `webpack.common.js`. copy and past one of available (ie `dev` or `prod`) configuration into it.
+
+```javascript
+const path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  entry: './src/index.js',
+  module: {
+    rules: [{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }],
+  },
+  plugins: [new HtmlWebpackPlugin()],
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+};
+```
+
+##### Changed
+
+- 3 `webpack.dev.js`
+
+```javascript
+const { merge } = require('webpack-merge');
+const common = require('./webpack-common');
+
+module.exports = merge(common, {
+  mode: 'development',
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './dist',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/i,
+        use: [
+          { loader: 'css-loader', options: { sourceMap: true } },
+          { loader: 'postcss-loader', options: { sourceMap: true } },
+          { loader: 'sass-loader', options: { sourceMap: true } },
+        ],
+      },
+    ],
+  },
+});
+```
+
+- 4 `webpack.prod.js`
+
+```javascript
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = merge(common, {
+  mode: 'production',
+  module: {
+    rules: [
+      {
+        test: /\.scss$/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
+      },
+    ],
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
+  ],
+});
+```
+
 ## Errors
 
 - Error: Cannot find module 'webpack-cli/bin/config-yargs'
@@ -301,8 +390,13 @@ if (process.env.NODE_ENV === 'production') {
 :: Have you provided the appropriate loader.
 :: Check configuration of `package.json` to check that the correct `webpack` config is provided.
 
+- Error: Cannot find module './webpack-common'![](./assets/img/err_5.png)
+
+:: Naming error -- Check the imported file name
+
 ## Indexes
 
 1. `cssnano`: minimises the css file
 2. `.browserslistrc`: specifies supported browsers
 3. source maps will allow you to debug code easily during development---it's available for both `js` and `css`.
+4. common config is the shared config which the both `dev` and `prod` have in common.

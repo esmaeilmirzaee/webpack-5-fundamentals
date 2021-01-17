@@ -1,16 +1,11 @@
-const path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common.js');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
+module.exports = merge(common, {
   mode: 'production',
-  entry: './src/index.js',
-  devServer: {
-    contentBase: './dist',
-  },
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
       {
         test: /\.scss$/i,
         use: [
@@ -25,15 +20,8 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Production',
-    }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
   ],
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
-};
+});

@@ -409,3 +409,43 @@ module.exports = merge(common, {
 3. source maps will allow you to debug code easily during development---it's available for both `js` and `css`.
 4. common config is the shared config which the both `dev` and `prod` have in common.
 5. _Prevent Duplication_ helps when two `js` files uses a shared (piece, file or library) to optimise the `bundle` file.
+
+## Bonous
+
+> [](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
+
+1. `npm install -g eslint `
+2. `npx install-peerdeps --dev eslint-config-airbnb`
+
+```javascript
+"eslint.options": {
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": ["error"]
+  }
+},
+"prettier.semi": true,
+"prettier.trailingComma": "all",
+"prettier.printWidth": 80,
+"prettier.singleQuote": true,
+"editor.formatOnSave": true,
+"prettier.jsxSingleQuote": true,
+```
+
+3. To prettier files before `git commit` use `husky` and `lint-staged`.
+
+```javascript
+'husky': {
+  'hooks': {
+    "pre-commit": 'lint-staged'
+  }
+},
+"lint-staged': {
+  './src/js/*.js': [
+    "prettier --write",
+    "eslint src/js/*.js --fix"
+  ],
+  '*.js': 'eslint --cache --fix'
+}
+```
